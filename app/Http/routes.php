@@ -14,5 +14,5 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('panel', 'TestController@panel');
+Route::get('panel', 'TestController@panel')->name('panel');
 Route::get('connect', 'TestController@connect')->name('connect');
