@@ -17,11 +17,12 @@ class TestController extends Controller
 	
     $client = new Client();
     $response = $client->post('https://api-sandbox.direct.yandex.ru/v4/json/', [
-    'json' => ['token' => 'AQAAAAACJo7AAARmcq7Th6ZGH0j8obUVp5GdNco',
+    'json' => ['token' => 'AQAAAAAfNADPAARs8_hXK0DksE3nlBtnQogvjKk',
 				'method' => 'GetClientInfo',
-				'param' => array('slide58')]
+				'param' => array('test.gradient')]
 ]);
-
+//AQAAAAAfNADPAARs8_hXK0DksE3nlBtnQogvjKk test.gradient
+//AQAAAAACJo7AAARmcq7Th6ZGH0j8obUVp5GdNco slide58
 echo $response->getStatusCode();      // >>> 200
 echo $response->getReasonPhrase();    // >>> OK
 $contents = (string) $response->getBody();
