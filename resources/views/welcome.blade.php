@@ -28,7 +28,13 @@
             .content {
                 text-align: center;
                 display: inline-block;
+				
             }
+			
+			a {
+			color: black;
+			text-decoration: none;
+			}
 
             .title {
                 font-size: 96px;
@@ -38,8 +44,8 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Gradient</div>
-				<a href = "{{ route('panel') }}">Панель управления</a>
+               <a href = "{{ route('panel') }}"> <div class="title">Gradient</div></a>
+				
             </div>
         </div>
     </body>
