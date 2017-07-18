@@ -1,2 +1,8 @@
 CONNECT PANEL
-<a href = "{{ route('connect') }}">Получить личные данные</a>
+<ul>
+<li>
+<a href = "{{ route('connect') }}">Получить данные по клиенту</a>
+</li>
+<li>
+<a href = "{{ route('compains') }}">Получить данные о компаниях</a>
+</li>
