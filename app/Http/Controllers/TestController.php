@@ -13,70 +13,64 @@ class TestController extends Controller
 	{
 	
 
-	//$req = new HTTP_Request("https://api.direct.yandex.ru/v4/json/");
+		//$req = new HTTP_Request("https://api.direct.yandex.ru/v4/json/");
 	
-    $client = new Client();
-    $response = $client->post('https://api-sandbox.direct.yandex.ru/v4/json/', [
-    'json' => ['token' => 'AQAAAAAfNADPAARs8_hXK0DksE3nlBtnQogvjKk',
+		$client = new Client();
+		$response = $client->post('https://api-sandbox.direct.yandex.ru/v4/json/', [
+		'json' => ['token' => 'AQAAAAAfNADPAARs8_hXK0DksE3nlBtnQogvjKk',
 				'method' => 'GetClientInfo',
 				'param' => array('test.gradient')]
-]);
-//AQAAAAAfNADPAARs8_hXK0DksE3nlBtnQogvjKk test.gradient
-//AQAAAAACJo7AAARmcq7Th6ZGH0j8obUVp5GdNco slide58
-echo $response->getStatusCode();      // >>> 200
-echo $response->getReasonPhrase();    // >>> OK
-$contents = (string) $response->getBody();
-echo $contents;
-		return view('pages.personal');
+								]);
+				//AQAAAAAfNADPAARs8_hXK0DksE3nlBtnQogvjKk test.gradient
+				//AQAAAAACJo7AAARmcq7Th6ZGH0j8obUVp5GdNco slide58
+		echo $response->getStatusCode();      // >>> 200
+		echo $response->getReasonPhrase();    // >>> OK
+		$contents = (string) $response->getBody();
+		echo $contents;
+	return view('pages.personal');
 		
 	}
 	
 	public function getCompains2()
 	{
 	
-//--- Input data ----------------------------------------------------//
-// Address of the Campaigns service for sending JSON requests (case-sensitive)
-$url = 'https://api-sandbox.direct.yandex.ru/v4/json/';
-// OAuth token of the user to execute requests on behalf of
-$token = 'AQAAAAAfNADPAARs8_hXK0DksE3nlBtnQogvjKk';
-// Username of the advertising agency client
-// Required parameter if requests are made on behalf of an advertising agency
-$clientLogin = 'test.gradient';
+		//--- Input data ----------------------------------------------------//
+		// Address of the Campaigns service for sending JSON requests (case-sensitive)
+		$url = 'https://api-sandbox.direct.yandex.ru/v4/json/';
+		// OAuth token of the user to execute requests on behalf of
+		$token = 'AQAAAAAfNADPAARs8_hXK0DksE3nlBtnQogvjKk';
+		// Username of the advertising agency client
+		// Required parameter if requests are made on behalf of an advertising agency
+		$clientLogin = 'test.gradient';
 
-//--- Preparing and executing the request -----------------------------------//
-// Setting the request HTTP headers
-$headers = array(
-   "Authorization: Bearer AQAAAAAfNADPAARs8_hXK0DksE3nlBtnQogvjKk\n",                    // OAuth token. The word Bearer must be used
-   "Client-Login: test.gradient\n",                      // Username of the advertising agency client
-   "Accept-Language: en",                             // Language for response messages
-   "Content-Type: application/json; charset=utf-8"    // Data type and request encoding
-);
+		//--- Preparing and executing the request -----------------------------------//
+		// Setting the request HTTP headers
+		$headers = array(
+					"Authorization: Bearer AQAAAAAfNADPAARs8_hXK0DksE3nlBtnQogvjKk\n",                    // OAuth token. The word Bearer must be used
+					"Client-Login: test.gradient\n",                      // Username of the advertising agency client
+					"Accept-Language: en",                             // Language for response messages
+					"Content-Type: application/json; charset=utf-8"    // Data type and request encoding
+		);
 
-// Parameters for the request to the Yandex.Direct API server
-$params = array(
-   'method' => 'get',                                 // Method of the Campaigns service
-   'params' => array(
-      'SelectionCriteria' => (object) array(),        // Criteria for filtering campaigns. To get all campaigns, leave it empty
-      'FieldNames' => array('Id', 'Name')             // Names of parameters to get
-   )
-);
-// Converting input parameters to JSON
-$body = json_encode($params, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-var_dump($body);
-// Creating the stream context: setting the HTTP headers and message body
-$streamOptions = stream_context_create(array(
-   'http' => array(
-      'method' => 'POST',
-      'header' => $headers,
-      'content' => $body
-   ),
-   /*
-   // To fully conform to the HTTPS protocol, you can enable verification of the SSL certificate on the Yandex.Direct API server.
-   'ssl' => array(
-      'verify_peer' => true,
-      'cafile' => getcwd().DIRECTORY_SEPARATOR.'CA.pem' // Path to the local copy of the root SSL certificate
-   )
-   */ 
+		// Parameters for the request to the Yandex.Direct API server
+		$params = array(
+				'method' => 'get',                                 // Method of the Campaigns service
+				'params' => array(
+				'SelectionCriteria' => (object) array(),        // Criteria for filtering campaigns. To get all campaigns, leave it empty
+				'FieldNames' => array('Id', 'Name')             // Names of parameters to get
+			)
+		);
+			// Converting input parameters to JSON
+		$body = json_encode($params, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+		var_dump($body);
+		// Creating the stream context: setting the HTTP headers and message body
+		$streamOptions = stream_context_create(array(
+				'http' => array(
+				'method' => 'POST',
+				'header' => $headers,
+				'content' => $body
+		),
+  
 ));
 
 // Executing the request and getting the result
@@ -139,18 +133,65 @@ $result = file_get_contents('https://api-sandbox.direct.yandex.com/json/v5/campa
 
 $result = json_decode($result, TRUE);
 
+
 if (isset($result->error_code)) {
      echo "!!!!!!!!!!!!!!!!";
     //  echo "API error  {$result->error_string} )";
    }
+   
 var_dump($result);
+$campaigns =  $result['result']['Campaigns'];
 
 
 }
 	
 	
+	public function getSubClients(){
+	$client = new Client();
+   	$param = array(
+		'Login' => 'test.gradient',
+		'Filter' => array(
+		'StatusArch' => 'No'
+		),
+	);
+   
+    $response = $client->post('https://api-sandbox.direct.yandex.ru/v4/json/', [
+    'json' => ['token' => 'AQAAAAAfNADPAARs8_hXK0DksE3nlBtnQogvjKk',
+				'method' => 'GetSubClients',
+				'param' => $param]
+	]);
+
+
+	//AQAAAAAfNADPAARs8_hXK0DksE3nlBtnQogvjKk test.gradient
+	//AQAAAAACJo7AAARmcq7Th6ZGH0j8obUVp5GdNco slide58
+	echo $response->getStatusCode();      // >>> 200
+	echo $response->getReasonPhrase();    // >>> OK
+	$contents = (string) $response->getBody();
+	echo $contents;
+	$result = json_decode($response->getBody(), TRUE);
+	foreach ($result['data'] as $item) {
+    echo $item['Login'];
+	}
+	$resultObj = json_decode($response->getBody());
+	foreach ($resultObj->data as $item) {
+    echo $item->Login;
+	}
+	
+	/*$subLogins =  $result['data']['Login'];
+	
+	echo $subLogins;*/
+	return view('pages.personal')->with('logins',$resultObj);
+		
+
+	
+	}
+	
+	
 	 public function panel()
 	{
-		return view('pages.conpanel');
+		return view('pages.conpanel')->with('campains',$campains);
 	}
+	
+	
+	
 }
