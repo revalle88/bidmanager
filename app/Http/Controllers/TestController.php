@@ -116,6 +116,7 @@ public function getCompains($login){
                 "Name"
             ]
      ]);
+	
 $request = json_encode($request);
 $opts = array(
     'http' => array(

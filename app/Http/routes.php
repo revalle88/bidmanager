@@ -16,5 +16,5 @@ Route::get('/', function () {
 });
 Route::get('panel', 'TestController@panel')->name('panel');
 Route::get('connect', 'TestController@connect')->name('connect');
-Route::get('compains', 'TestController@getCompains')->name('compains');
+Route::get('compains/{login}', 'TestController@getCompains')->name('compains');
 Route::get('subclients', 'TestController@getSubClients')->name('subclients');
