@@ -103,7 +103,7 @@ var_dump($result);
 		
 	}
 	
-public function getCompains(){
+public function getCompains($login){
 
 		$request = array(
     'method' => 'get',
@@ -180,7 +180,7 @@ $campaigns =  $result['result']['Campaigns'];
 	/*$subLogins =  $result['data']['Login'];
 	
 	echo $subLogins;*/
-	return view('pages.personal')->with('logins',$resultObj);
+	return view('pages.subclients')->with('logins',$resultObj);
 		
 
 	
@@ -189,7 +189,7 @@ $campaigns =  $result['result']['Campaigns'];
 	
 	 public function panel()
 	{
-		return view('pages.conpanel')->with('campains',$campains);
+		return view('pages.conpanel');
 	}
 	
 	
