@@ -105,7 +105,7 @@ var_dump($result);
 	
 public function getCompains($login){
 
-		$request = array(
+	$request = array(
     'method' => 'get',
     'params' => [
         'SelectionCriteria' => [
@@ -113,36 +113,37 @@ public function getCompains($login){
         ],
         'FieldNames' => [
                 "Id",
-                "Name"
+                "Name",
+				"StartDate",
+				"Funds"
             ]
      ]);
 	
-$request = json_encode($request);
-$opts = array(
-    'http' => array(
+	$request = json_encode($request);
+	$opts = array(
+		'http' => array(
         'method' => "GET",
-        'header' => "Authorization: Bearer AQAAAAACJo7AAARmcq7Th6ZGH0j8obUVp5GdNco\n" .
-                "Accept-Language: ru\n" .
-                "Client-Login: slide58\n" .
-                "Content-Type: application/json; charset=utf-8",
+        'header' => "Authorization: Bearer AQAAAAAfNADPAARs8_hXK0DksE3nlBtnQogvjKk\n" .
+					"Accept-Language: ru\n" .
+					"Client-Login: $login\n" .
+					"Content-Type: application/json; charset=utf-8",
         'content' => $request,
-    )
-);
-$context = stream_context_create($opts);
-$result = file_get_contents('https://api-sandbox.direct.yandex.com/json/v5/campaigns', 0, $context);
+		)
+	);
+	$context = stream_context_create($opts);
+	$result = file_get_contents('https://api-sandbox.direct.yandex.com/json/v5/campaigns', 0, $context);
 
 
-$result = json_decode($result, TRUE);
-
-
-if (isset($result->error_code)) {
-     echo "!!!!!!!!!!!!!!!!";
+	$result = json_decode($result, TRUE);
+	//$resultObj = json_decode($result);
+//	var_dump($resultObj);
+	if (isset($result->error_code)) {
+		echo "!!!!!!!!!!!!!!!!";
     //  echo "API error  {$result->error_string} )";
-   }
-   
-var_dump($result);
-$campaigns =  $result['result']['Campaigns'];
-
+	}
+	var_dump($result);
+	$campaigns =  $result['result']['Campaigns'];
+//return view('pages.compains');
 
 }
 	
@@ -190,8 +191,39 @@ $campaigns =  $result['result']['Campaigns'];
 	
 	 public function panel()
 	{
-		return view('pages.conpanel');
+		$client = new Client();
+		$param = array(
+			'Login' => 'test.gradient',
+			'Filter' => array(
+			'StatusArch' => 'No'
+			),
+	);
+   
+    $response = $client->post('https://api-sandbox.direct.yandex.ru/v4/json/', [
+    'json' => ['token' => 'AQAAAAAfNADPAARs8_hXK0DksE3nlBtnQogvjKk',
+				'method' => 'GetSubClients',
+				'param' => $param]
+	]);
+
+
+	//AQAAAAAfNADPAARs8_hXK0DksE3nlBtnQogvjKk test.gradient
+	//AQAAAAACJo7AAARmcq7Th6ZGH0j8obUVp5GdNco slide58
+	echo $response->getStatusCode();      // >>> 200
+	echo $response->getReasonPhrase();    // >>> OK
+	$contents = (string) $response->getBody();
+	echo $contents;
+	$result = json_decode($response->getBody(), TRUE);
+	$resultObj = json_decode($response->getBody());
+	
+	
+		return view('pages.conpanel')->with('logins',$resultObj);
 	}
+	
+	
+	
+	
+	
+	
 	
 	
 	
