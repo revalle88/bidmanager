@@ -134,16 +134,18 @@ public function getCompains($login){
 	$result = file_get_contents('https://api-sandbox.direct.yandex.com/json/v5/campaigns', 0, $context);
 
 
-	$result = json_decode($result, TRUE);
-	//$resultObj = json_decode($result);
-//	var_dump($resultObj);
-	if (isset($result->error_code)) {
+//	$result = json_decode($result, TRUE);
+	$resultObj = json_decode($result);
+	var_dump($resultObj);
+	echo "<br>";
+	var_dump($resultObj->result->Campaigns);
+/*	if (isset($result->error_code)) {
 		echo "!!!!!!!!!!!!!!!!";
     //  echo "API error  {$result->error_string} )";
 	}
 	var_dump($result);
-	$campaigns =  $result['result']['Campaigns'];
-//return view('pages.compains');
+	$campaigns =  $result['result']['Campaigns'];*/
+return view('pages.compains')->with('campaigns', $resultObj->result->Campaigns);
 
 }
 	
