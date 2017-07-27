@@ -24,7 +24,7 @@
                                 <!-- Task Name -->
                                 <td class="table-text">
 								
-                                  <div> <a href = "{{ route('compains', $login->Login)}}">{{$login->Login}}</a></div>
+                                  <div> <a href = "{{ route('reports', $login->Login)}}">{{$login->Login}}</a></div>
                                 </td>
 
                                 <td>
