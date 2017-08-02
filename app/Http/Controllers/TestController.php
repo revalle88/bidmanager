@@ -291,8 +291,17 @@ var_dump($result);
 	
 
 	
-public function getReport($login)
+public function getReport(Request $request)
 	{
+	var_dump($request->all());
+	$dateBeg = $request->input('dateBeg');
+	echo $dateBeg;
+	echo "hello";
+	$login = $request->input('login');
+	echo $login;
+	//if (null!==($request->input('dateBeg')))
+	//$dateBeg = $request->input('dateBeg');
+	//echo $dateBeg;
 			$headers = array(
 
 					"Authorization: Bearer AQAAAAAfNADPAARs8_hXK0DksE3nlBtnQogvjKk",                    // OAuth token. The word Bearer must be used
@@ -339,7 +348,7 @@ $clicks = $bits[1];
 $cost = $bits[2];
 $clickcost = $cost/$clicks;
 
-	return view('pages.reports', compact('campaignid', 'clicks', 'cost', 'clickcost'));
+	return view('pages.reports', compact('campaignid', 'clicks', 'cost', 'clickcost', 'login'));
 	
 	}
 	

@@ -1,5 +1,7 @@
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+<div class = "container">
 <br>
+
 <table class="table table-hover">
 <thead>
                             <tr>
@@ -33,7 +35,10 @@
                                 </td>
 							</tr>
 </table>
-
-<input id = "dateBeg" type = "date">
-<input id = "dateEnd" type = "date">
+{!! Form::open(array('url' => 'reports')) !!}
+<input type = "text" name = "login" id = "login" value = "{{$login}}">
+<input name = "dateBeg" type = "date">
+<input name = "dateEnd" type = "date">
 <input type = "submit" text = "ok">
+{!! Form::close() !!}
+</div>

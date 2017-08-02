@@ -16,12 +16,13 @@
     @endforeach
   </select>
 </div>-->
-
-Выберите клиента:
-<table>
+<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+<div class="container">
+Выберите клиента:<br><br>
+<!--<table>
    @foreach ($logins->data as $login)
                             <tr>
-                                <!-- Task Name -->
+                               
                                 <td class="table-text">
 								
                                   <div> <a href = "{{ route('reports', $login->Login)}}">{{$login->Login}}</a></div>
@@ -31,5 +32,22 @@
                                     <div>{{ $login->FIO }}</div>
                                 </td>
                             </tr>
+							
+							
     @endforeach
 </table>
+-->
+
+   {!! Form::open(array('url' => 'reports')) !!}
+      @foreach ($logins->data as $login)
+	  <div class="form-group">
+ <input type="radio" name="login" value="{{$login->Login}}">{{$login->FIO }}<Br>
+ </div>
+
+
+
+   @endforeach
+<input type = "submit" text = "ok">
+ {!! Form::close() !!}
+ 
+ </div>

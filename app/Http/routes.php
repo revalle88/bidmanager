@@ -19,3 +19,4 @@ Route::get('connect', 'TestController@connect')->name('connect');
 Route::get('compains/{login}', 'TestController@getCompains')->name('compains');
 Route::get('subclients', 'TestController@getSubClients')->name('subclients');
 Route::get('reports/{login}', 'TestController@getReport')->name('reports');
+Route::post('reports', 'TestController@getReport')->name('reports');
