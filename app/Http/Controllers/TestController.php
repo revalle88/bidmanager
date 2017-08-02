@@ -319,8 +319,27 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1 );
 curl_setopt($ch, CURLOPT_POST, 1);
 curl_setopt($ch, CURLOPT_POSTFIELDS, $xmlBody);
 $content=curl_exec($ch);
-echo $content;
-	return view('pages.reports')->with('content',$content);
+//echo $content;
+
+$delimiter = "\n";
+$splitcontents = explode($delimiter, $content);
+//$bits = array();
+$i=0;
+foreach ( $splitcontents as $line )
+{
+	$i++;
+	if ($i == 3){
+    $bits = explode("\t", $line);
+	}
+    
+}
+//var_dump($bits);
+$campaignid = $bits[0];
+$clicks = $bits[1];
+$cost = $bits[2];
+$clickcost = $cost/$clicks;
+
+	return view('pages.reports', compact('campaignid', 'clicks', 'cost', 'clickcost'));
 	
 	}
 	
