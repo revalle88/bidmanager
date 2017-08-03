@@ -293,14 +293,10 @@ var_dump($result);
 	
 public function getReport(Request $request)
 	{
-	var_dump($request->all());
+	//var_dump($request->all());
 	$dateBeg = $request->input('dateBeg');
-	echo $dateBeg;
-	echo "hello";
 	$login = $request->input('login');
-	echo $login;
-	//if (null!==($request->input('dateBeg')))
-	//$dateBeg = $request->input('dateBeg');
+    $dateEnd = $request->input('dateEnd');
 	//echo $dateBeg;
 			$headers = array(
 
@@ -314,8 +310,19 @@ public function getReport(Request $request)
 			);
 
 			$xmlBody = "<?xml version='1.0' encoding='UTF-8'?><ReportDefinition xmlns='http://api.direct.yandex.com/v5/reports'>
-			<SelectionCriteria></SelectionCriteria>
-			<FieldNames>CampaignId</FieldNames><FieldNames>Clicks</FieldNames><FieldNames>Cost</FieldNames><ReportName>Actual Data</ReportName><ReportType>CAMPAIGN_PERFORMANCE_REPORT</ReportType><DateRangeType>AUTO</DateRangeType><Format>TSV</Format><IncludeVAT>YES</IncludeVAT><IncludeDiscount>YES</IncludeDiscount></ReportDefinition>";
+			<SelectionCriteria>";
+			if (($dateBeg!=null)&&($dateEnd!=null)){
+			$xmlBody = $xmlBody . "<DateFrom>".$dateBeg."</DateFrom><DateTo>".$dateEnd."</DateTo>";
+			}
+			$xmlBody = $xmlBody ."</SelectionCriteria>
+			<FieldNames>CampaignId</FieldNames><FieldNames>Clicks</FieldNames><FieldNames>Cost</FieldNames><ReportName>Actual Data</ReportName><ReportType>CAMPAIGN_PERFORMANCE_REPORT</ReportType>";
+			if (($dateBeg!=null)&&($dateEnd!=null)){
+			$xmlBody = $xmlBody . "<DateRangeType>CUSTOM_DATE</DateRangeType>";
+			}
+			else{
+			$xmlBody = $xmlBody . "<DateRangeType>AUTO</DateRangeType>";
+			}
+			$xmlBody = $xmlBody ."<Format>TSV</Format><IncludeVAT>YES</IncludeVAT><IncludeDiscount>YES</IncludeDiscount></ReportDefinition>";
 
 $post_data = array('xml' => $xmlBody);
 //var_dump($xmlBody);
@@ -346,7 +353,7 @@ foreach ( $splitcontents as $line )
 $campaignid = $bits[0];
 $clicks = $bits[1];
 $cost = $bits[2];
-$clickcost = $cost/$clicks;
+$clickcost = number_format($cost/$clicks, 2, '.', '');
 
 	return view('pages.reports', compact('campaignid', 'clicks', 'cost', 'clickcost', 'login'));
 	

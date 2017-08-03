@@ -25,20 +25,20 @@
                                    {{$campaignid}}
                                 </td>	
                                 <td>
-                                  {{$cost}}
+                                  {{$cost}} руб.
                                 </td>
 								<td>
                                   {{$clicks}}
                                 </td>
 								<td>
-                                  {{$clickcost}}
+                                  {{$clickcost}} руб.
                                 </td>
 							</tr>
 </table>
 {!! Form::open(array('url' => 'reports')) !!}
-<input type = "text" name = "login" id = "login" value = "{{$login}}">
-<input name = "dateBeg" type = "date">
-<input name = "dateEnd" type = "date">
-<input type = "submit" text = "ok">
+<input type = "hidden" name = "login" id = "login" value = "{{$login}}">
+В период с <input name = "dateBeg" type = "date">
+по <input name = "dateEnd" type = "date">
+<input type = "submit" text = "ok" value = "посчитать">
 {!! Form::close() !!}
 </div>
